@@ -1,45 +1,761 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-  <title>kungraph-pixel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BuddyBoost — No Shortcuts. Time to Grow.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Prompt:wght@400;600;700;900&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --orange: #FF5C00;
+      --orange-light: #FF8533;
+      --navy: #0A0F2C;
+      --navy-mid: #111836;
+      --navy-light: #1A2448;
+      --white: #FFFFFF;
+      --cream: #FFF5ED;
+      --gray: #8A93B2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 60px auto;
-      background: #0d1117;
-      color: #c9d1d9;
+      font-family: 'Sarabun', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
     }
-    h1 { color: #58a6ff; }
-    p { line-height: 1.7; }
-    a { color: #58a6ff; }
-    .tag {
-      display: inline-block;
-      background: #21262d;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin: 4px;
-      font-size: 14px;
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(10,15,44,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,92,0,0.15);
     }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 3px;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--gray); text-decoration: none;
+      font-family: 'Prompt', sans-serif; font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta {
+      background: var(--orange); color: white;
+      padding: 10px 24px; border-radius: 6px;
+      font-family: 'Prompt', sans-serif; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--orange-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 50%, rgba(255,92,0,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,92,0,0.06) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,92,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,92,0,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,92,0,0.15); border: 1px solid rgba(255,92,0,0.3);
+      padding: 6px 16px; border-radius: 100px;
+      font-family: 'Prompt', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--orange); letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-tag::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 8vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .hero h1 .line2 { color: var(--orange); display: block; }
+    .hero-sub {
+      font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 400;
+      color: var(--gray); line-height: 1.6; margin: 24px 0 40px;
+      max-width: 520px;
+    }
+    .hero-sub strong { color: var(--white); }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--orange); color: white;
+      padding: 16px 36px; border-radius: 8px;
+      font-family: 'Prompt', sans-serif; font-size: 16px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 8px 32px rgba(255,92,0,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,92,0,0.5); }
+    .btn-secondary {
+      background: transparent; color: white;
+      padding: 16px 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+      font-family: 'Prompt', sans-serif; font-size: 16px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 60px;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--orange);
+      letter-spacing: 1px;
+    }
+    .stat-label { font-size: 13px; color: var(--gray); margin-top: 2px; }
+
+    /* ── PROBLEM SECTION ── */
+    .section { padding: 100px 60px; }
+    .section-tag {
+      font-family: 'Prompt', sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--orange); letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: 1px; line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .section-body {
+      color: var(--gray); font-size: 17px; line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+      margin-top: 60px;
+    }
+    .problem-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .problem-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .problem-icon { font-size: 36px; margin-bottom: 16px; }
+    .problem-card h3 {
+      font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .problem-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+
+    /* ── HEIGHT TRACKER ── */
+    .tracker-section {
+      padding: 100px 60px;
+      background: var(--navy-mid);
+      position: relative; overflow: hidden;
+    }
+    .tracker-section::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,92,0,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tracker-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .tracker-form {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,92,0,0.2);
+      border-radius: 20px; padding: 44px;
+      position: relative; z-index: 2;
+    }
+    .tracker-form h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 40px;
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .tracker-form h2 span { color: var(--orange); }
+    .tracker-form p { color: var(--gray); font-size: 15px; margin-bottom: 32px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-family: 'Prompt', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--gray); letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .form-group select, .form-group input {
+      background: var(--navy); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 14px 16px;
+      color: var(--white); font-family: 'Sarabun', sans-serif; font-size: 16px;
+      outline: none; transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-group select:focus, .form-group input:focus {
+      border-color: var(--orange);
+    }
+    .form-group input::placeholder { color: var(--gray); }
+
+    .calc-btn {
+      width: 100%; padding: 16px;
+      background: var(--orange); color: white; border: none;
+      border-radius: 10px; cursor: pointer;
+      font-family: 'Prompt', sans-serif; font-size: 16px; font-weight: 700;
+      margin-top: 8px; transition: all 0.2s;
+      box-shadow: 0 6px 24px rgba(255,92,0,0.35);
+    }
+    .calc-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+    .result-box {
+      display: none; margin-top: 28px;
+      background: var(--navy);
+      border: 1px solid rgba(255,92,0,0.3);
+      border-radius: 14px; padding: 28px;
+    }
+    .result-box.show { display: block; }
+    .result-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .result-value { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--orange); }
+    .result-msg { color: var(--gray); font-size: 15px; margin-top: 12px; line-height: 1.6; }
+    .result-msg strong { color: var(--white); }
+    .result-bar-wrap { margin-top: 20px; }
+    .result-bar-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray); margin-bottom: 6px; }
+    .result-bar { height: 8px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+    .result-bar-fill { height: 100%; border-radius: 100px; background: var(--orange); transition: width 1s ease; }
+
+    .tracker-info { position: relative; z-index: 2; padding-top: 20px; }
+    .tracker-info .section-tag { margin-bottom: 12px; }
+    .tracker-info h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 52px;
+      letter-spacing: 1px; line-height: 1.0; margin-bottom: 20px;
+    }
+    .tracker-info h2 span { color: var(--orange); }
+    .tracker-info p { color: var(--gray); font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+    .info-items { display: flex; flex-direction: column; gap: 20px; }
+    .info-item { display: flex; align-items: flex-start; gap: 16px; }
+    .info-dot {
+      width: 36px; height: 36px; min-width: 36px; border-radius: 50%;
+      background: rgba(255,92,0,0.15); display: flex; align-items: center; justify-content: center;
+      font-size: 16px; margin-top: 2px;
+    }
+    .info-item h4 { font-family: 'Prompt', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .info-item p { color: var(--gray); font-size: 14px; line-height: 1.5; margin: 0; }
+
+    /* ── PRODUCT ── */
+    .product-section { padding: 100px 60px; }
+    .product-inner { max-width: 1100px; margin: 0 auto; }
+    .product-header { text-align: center; margin-bottom: 64px; }
+    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .product-card {
+      background: var(--navy-light); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; padding: 40px 32px; text-align: center;
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .product-card.featured {
+      border-color: var(--orange);
+      background: linear-gradient(135deg, var(--navy-light) 0%, rgba(255,92,0,0.08) 100%);
+    }
+    .product-card.featured::before {
+      content: 'COMING SOON';
+      position: absolute; top: 16px; right: -28px;
+      background: var(--orange); color: white;
+      font-family: 'Prompt', sans-serif; font-size: 10px; font-weight: 700;
+      padding: 4px 40px; transform: rotate(45deg);
+      letter-spacing: 1px;
+    }
+    .product-card:hover { transform: translateY(-6px); }
+    .product-emoji { font-size: 52px; margin-bottom: 20px; display: block; }
+    .product-card h3 {
+      font-family: 'Prompt', sans-serif; font-size: 20px; font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .product-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+
+    /* ── COMMUNITY ── */
+    .community-section {
+      padding: 100px 60px;
+      background: var(--navy-mid);
+    }
+    .community-inner { max-width: 1100px; margin: 0 auto; }
+    .community-header { text-align: center; margin-bottom: 64px; }
+    .activity-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .activity-card {
+      background: var(--navy-light); border-radius: 16px;
+      padding: 32px; display: flex; gap: 24px; align-items: flex-start;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.2s;
+    }
+    .activity-card:hover { border-color: rgba(255,92,0,0.3); }
+    .activity-badge {
+      background: rgba(255,92,0,0.12); border: 1px solid rgba(255,92,0,0.25);
+      border-radius: 10px; padding: 14px; font-size: 28px; min-width: 60px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .activity-card h3 {
+      font-family: 'Prompt', sans-serif; font-size: 17px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .activity-card p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+    .activity-tag {
+      display: inline-block; margin-top: 12px;
+      background: rgba(255,92,0,0.1); border-radius: 100px;
+      padding: 3px 12px; font-size: 12px; color: var(--orange); font-weight: 600;
+    }
+
+    /* ── WAITLIST ── */
+    .waitlist-section {
+      padding: 100px 60px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .waitlist-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(255,92,0,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .waitlist-section h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 6vw, 72px);
+      letter-spacing: 2px; margin-bottom: 16px; position: relative;
+    }
+    .waitlist-section h2 span { color: var(--orange); }
+    .waitlist-section p {
+      color: var(--gray); font-size: 18px; margin-bottom: 40px; position: relative;
+    }
+    .waitlist-form {
+      display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+      position: relative;
+    }
+    .waitlist-form input {
+      flex: 1; padding: 16px 20px;
+      background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; color: white; font-size: 16px; outline: none;
+      font-family: 'Sarabun', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .waitlist-form input:focus { border-color: var(--orange); }
+    .waitlist-form input::placeholder { color: var(--gray); }
+    .waitlist-form button {
+      padding: 16px 28px; background: var(--orange); color: white;
+      border: none; border-radius: 10px; cursor: pointer;
+      font-family: 'Prompt', sans-serif; font-size: 15px; font-weight: 700;
+      white-space: nowrap; transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(255,92,0,0.4);
+    }
+    .waitlist-form button:hover { background: var(--orange-light); }
+    .waitlist-note { color: var(--gray); font-size: 13px; margin-top: 16px; position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 60px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 3px;
+    }
+    .footer-logo span { color: var(--orange); }
+    .footer-tagline { color: var(--gray); font-size: 13px; margin-top: 4px; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      color: var(--gray); font-size: 14px; text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-copy { color: var(--gray); font-size: 13px; text-align: right; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .section, .tracker-section, .product-section,
+      .community-section, .waitlist-section { padding: 70px 24px; }
+      .problem-grid, .product-grid { grid-template-columns: 1fr; }
+      .tracker-inner { grid-template-columns: 1fr; gap: 40px; }
+      .activity-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+      .footer-links { flex-direction: column; align-items: center; gap: 12px; }
+      .waitlist-form { flex-direction: column; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      animation: fadeIn 0.7s ease forwards;
+    }
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+    .fade-in:nth-child(4) { animation-delay: 0.3s; }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* success state */
+    .success-msg {
+      display: none; color: #4CAF50; font-size: 15px;
+      font-family: 'Prompt', sans-serif; font-weight: 600;
+      margin-top: 12px; text-align: center;
+    }
+    .success-msg.show { display: block; }
   </style>
 </head>
 <body>
-  <h1>👋 Hi, I'm kungraph-pixel</h1>
-  <p>Welcome to my personal website, built with GitHub Pages!</p>
 
-  <h2>About Me</h2>
-  <p>I'm learning web development and exploring GitHub. Based in Thailand 🇹🇭</p>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BUDDY<span>BOOST</span></div>
+  <ul class="nav-links">
+    <li><a href="#tracker">Height Tracker</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#community">Community</a></li>
+    <li><a href="#waitlist">Join Us</a></li>
+  </ul>
+  <a href="#waitlist" class="nav-cta">เข้าร่วมก่อนใคร</a>
+</nav>
 
-  <h2>What I'm Working On</h2>
-  <span class="tag">🚀 Learning GitHub</span>
-  <span class="tag">🌐 Building websites</span>
-  <span class="tag">💡 BuddyBoost Project</span>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag fade-in">สำหรับเด็กอายุ 9–18 ปี</div>
+    <h1 class="fade-in">
+      NO SHORTCUTS.
+      <span class="line2">TIME TO GROW.</span>
+    </h1>
+    <p class="hero-sub fade-in">
+      แคลเซียมที่ถูกออกแบบมา<strong>เพื่อช่วงเวลาสำคัญที่สุดของการเติบโต</strong><br>
+      ไม่ใช่แค่อาหารเสริม — แต่เป็นพาร์ทเนอร์ที่โตไปพร้อมกับเธอ
+    </p>
+    <div class="hero-btns fade-in">
+      <a href="#tracker" class="btn-primary">🔍 เช็คความสูงของฉัน</a>
+      <a href="#waitlist" class="btn-secondary">รับแจ้งเตือนก่อนเปิดตัว</a>
+    </div>
+    <div class="hero-stats fade-in">
+      <div>
+        <div class="stat-num">9–18</div>
+        <div class="stat-label">ช่วงอายุที่กระดูก<br>สะสมมวลสูงสุด</div>
+      </div>
+      <div>
+        <div class="stat-num">90%</div>
+        <div class="stat-label">เด็กไทยได้รับแคลเซียม<br>ไม่เพียงพอต่อวัน</div>
+      </div>
+      <div>
+        <div class="stat-num">3 ปี</div>
+        <div class="stat-label">ช่วง Growth Spurt<br>ที่ควรดูแลที่สุด</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <h2>Contact</h2>
-  <p>Find me on GitHub: 
-    <a href="https://github.com/kungraph-pixel">
-      github.com/kungraph-pixel
+<!-- PROBLEM -->
+<section class="section" id="why">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-tag">ทำไม BuddyBoost</div>
+    <h2 class="section-title">ปัญหาที่ไม่มีใคร<br>พูดถึง</h2>
+    <p class="section-body">เด็กอายุ 9–18 ปีกำลังอยู่ในช่วง Growth Spurt แต่อาหารเสริมแคลเซียมในตลาดทุกตัวออกแบบมาสำหรับผู้ใหญ่และผู้สูงอายุ ไม่มีใครดูแลช่วงเวลาสำคัญที่สุดนี้จริงๆ</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">💊</div>
+        <h3>รสชาติเหมือนยา</h3>
+        <p>แคลเซียมทั่วไปขมและมีกลิ่นแปลก เด็กเลิกกินภายในสัปดาห์แรก เราออกแบบใหม่ให้กินได้จริง</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">😳</div>
+        <h3>อายเพื่อนเวลาพกพา</h3>
+        <p>หยิบวิตามินออกมากินหน้าเพื่อนแล้วโดนแกล้ง — BuddyBoost ออกแบบให้พกสบาย ดูคูล</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📊</div>
+        <h3>ไม่เห็นผลลัพธ์</h3>
+        <p>กินไปโดยไม่รู้ว่าร่างกายตอบสนองแค่ไหน — เราสร้าง Height Tracker ให้ติดตามการเติบโตจริง</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEIGHT TRACKER -->
+<section class="tracker-section" id="tracker">
+  <div class="tracker-inner">
+    <div class="tracker-form">
+      <h2>HEIGHT <span>TRACKER</span></h2>
+      <p>ตรวจสอบว่าความสูงของลูกอยู่ในเกณฑ์ไหน เทียบมาตรฐาน WHO สำหรับเด็กไทย</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>เพศ</label>
+          <select id="gender">
+            <option value="male">ชาย</option>
+            <option value="female">หญิง</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>อายุ (ปี)</label>
+          <select id="age">
+            <option value="9">9 ปี</option>
+            <option value="10">10 ปี</option>
+            <option value="11">11 ปี</option>
+            <option value="12">12 ปี</option>
+            <option value="13">13 ปี</option>
+            <option value="14">14 ปี</option>
+            <option value="15">15 ปี</option>
+            <option value="16">16 ปี</option>
+            <option value="17">17 ปี</option>
+            <option value="18">18 ปี</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>ความสูงปัจจุบัน (เซนติเมตร)</label>
+        <input type="number" id="height" placeholder="เช่น 155" min="100" max="220"/>
+      </div>
+      <button class="calc-btn" onclick="calculate()">🔍 ดูผลลัพธ์ของฉัน</button>
+
+      <div class="result-box" id="result">
+        <div class="result-label">ความสูงของคุณ</div>
+        <div class="result-value" id="res-height">—</div>
+        <div class="result-bar-wrap">
+          <div class="result-bar-label">
+            <span>ต่ำกว่าเกณฑ์</span>
+            <span>เกณฑ์มาตรฐาน</span>
+            <span>สูงกว่าเกณฑ์</span>
+          </div>
+          <div class="result-bar">
+            <div class="result-bar-fill" id="res-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="result-msg" id="res-msg"></div>
+      </div>
+    </div>
+
+    <div class="tracker-info">
+      <div class="section-tag">ทำไมต้องติดตาม</div>
+      <h2>ความสูงคือ<br><span>โอกาส</span><br>ที่มีช่วงเวลา</h2>
+      <p>การเติบโตของกระดูกมีช่วงเวลาจำกัด เมื่อ Growth Plate ปิดแล้ว จะไม่มีโอกาสกลับมา — แต่ถ้าดูแลถูกจังหวะ ผลลัพธ์จะยั่งยืนตลอดชีวิต</p>
+      <div class="info-items">
+        <div class="info-item">
+          <div class="info-dot">🦴</div>
+          <div>
+            <h4>ช่วง 9–12 ปี: Pre-Spurt</h4>
+            <p>ร่างกายเริ่มเตรียมพร้อม กระดูกต้องการแคลเซียมสะสมเพื่อการโตที่จะมาถึง</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-dot">🚀</div>
+          <div>
+            <h4>ช่วง 12–16 ปี: Peak Spurt</h4>
+            <p>ช่วงโตเร็วที่สุดในชีวิต อาจสูงขึ้น 8–12 cm ต่อปี ต้องการแคลเซียมมากที่สุด</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-dot">🎯</div>
+          <div>
+            <h4>ช่วง 16–18 ปี: Final Phase</h4>
+            <p>Growth Plate กำลังจะปิด โอกาสสุดท้ายในการสะสมมวลกระดูกและความสูง</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="product-section" id="product">
+  <div class="product-inner">
+    <div class="product-header">
+      <div class="section-tag">สิ่งที่กำลังมา</div>
+      <h2 class="section-title">BuddyBoost<br>ไม่เหมือนตัวไหนในตลาด</h2>
+      <p class="section-body" style="margin:0 auto; text-align:center;">ออกแบบมาเพื่อเด็กอายุ 9–18 โดยเฉพาะ ทั้งสูตร รสชาติ และประสบการณ์การกิน</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <span class="product-emoji">🧬</span>
+        <h3>Calcium L-Threonate</h3>
+        <p>แคลเซียมรูปแบบที่ดูดซึมได้ดีที่สุด ออกฤทธิ์เร็ว ไม่ระคายเคืองกระเพาะ เหมาะกับเด็กที่กินอาหารไม่สม่ำเสมอ</p>
+      </div>
+      <div class="product-card featured">
+        <span class="product-emoji">🍊</span>
+        <h3>ไม่ขม ไม่แปลก<br>กินได้จริง</h3>
+        <p>จากผลสำรวจ เด็กเลิกกินเพราะรสชาติ BuddyBoost รสชาติถูกออกแบบให้อยากกินทุกวัน ไม่ใช่แค่วันแรก</p>
+      </div>
+      <div class="product-card">
+        <span class="product-emoji">📦</span>
+        <h3>พกง่าย ไม่อาย</h3>
+        <p>แพ็คเกจจิ้งออกแบบให้เด็กพกไปโรงเรียนได้โดยไม่รู้สึกว่ากำลังพกยา — ดูคูล ไม่แปลกแยก</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community-section" id="community">
+  <div class="community-inner">
+    <div class="community-header">
+      <div class="section-tag">Community</div>
+      <h2 class="section-title">มากกว่าแค่อาหารเสริม<br>คือ Community ของการเติบโต</h2>
+      <p class="section-body" style="margin:0 auto;text-align:center;">เราสร้างพื้นที่ให้เด็กและแม่ได้ติดตาม เรียนรู้ และเติบโตไปด้วยกัน</p>
+    </div>
+    <div class="activity-grid">
+      <div class="activity-card">
+        <div class="activity-badge">📏</div>
+        <div>
+          <h3>Height Tracking Challenge</h3>
+          <p>บันทึกความสูงทุกเดือน เปรียบเทียบกับเพื่อนในชุมชน และดูว่าคุณโตขึ้นแค่ไหนในแต่ละ season</p>
+          <span class="activity-tag">🔜 เร็วๆ นี้</span>
+        </div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-badge">🏃</div>
+        <div>
+          <h3>Growth Workshop</h3>
+          <p>Workshop ออนไลน์กับผู้เชี่ยวชาญ เรื่องโภชนาการ การนอน และการออกกำลังกายที่ช่วยให้สูงขึ้นจริง</p>
+          <span class="activity-tag">🔜 เร็วๆ นี้</span>
+        </div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-badge">💬</div>
+        <div>
+          <h3>Mom Community</h3>
+          <p>กลุ่ม LINE สำหรับแม่ที่ดูแลลูกในช่วง Growth Phase — แชร์ทิป เรียนรู้จากผู้เชี่ยวชาญ ปรึกษาได้จริง</p>
+          <span class="activity-tag">🔜 เร็วๆ นี้</span>
+        </div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-badge">🎯</div>
+        <div>
+          <h3>Rise Goal Setting</h3>
+          <p>ตั้งเป้าหมายความสูงของลูก ระบบจะช่วยสร้าง roadmap โภชนาการและกิจกรรมที่เหมาะสมกับแต่ละช่วงวัย</p>
+          <span class="activity-tag">🔜 เร็วๆ นี้</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist-section" id="waitlist">
+  <div class="waitlist-glow"></div>
+  <h2>พร้อมจะ<span> RISE</span><br>ไปด้วยกันไหม?</h2>
+  <p>ลงชื่อรับแจ้งเตือนก่อนเปิดตัว — และรับสิทธิพิเศษสำหรับ Early Member</p>
+  <div class="waitlist-form">
+    <input type="email" id="email-input" placeholder="อีเมลของคุณ"/>
+    <button onclick="joinWaitlist()">เข้าร่วมก่อนใคร 🚀</button>
+  </div>
+  <div class="success-msg" id="success-msg">✅ ขอบคุณ! เราจะแจ้งเตือนคุณก่อนใคร</div>
+  <p class="waitlist-note">ติดตามเราได้ที่ LINE: @buddyboost &nbsp;|&nbsp; Instagram: @buddyboost</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">BUDDY<span>BOOST</span></div>
+    <div class="footer-tagline">No Shortcuts. Time to Rise.</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://line.me/R/ti/p/@buddyboost" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      LINE
     </a>
-  </p>
+    <a href="https://instagram.com/buddyboost" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      Instagram
+    </a>
+  </div>
+  <div class="footer-copy">
+    © 2025 BuddyBoost<br>
+    <span style="font-size:12px;">กำลังอยู่ระหว่างพัฒนาผลิตภัณฑ์</span>
+  </div>
+</footer>
+
+<script>
+  // WHO height reference data (approximate medians, cm)
+  const WHO = {
+    male:   { 9:133, 10:138, 11:143, 12:149, 13:156, 14:163, 15:169, 16:173, 17:175, 18:176 },
+    female: { 9:133, 10:138, 11:144, 12:149, 13:155, 14:158, 15:160, 16:162, 17:163, 18:163 }
+  };
+
+  function calculate() {
+    const gender = document.getElementById('gender').value;
+    const age = parseInt(document.getElementById('age').value);
+    const height = parseFloat(document.getElementById('height').value);
+
+    if (!height || height < 80 || height > 220) {
+      alert('กรุณาใส่ความสูงที่ถูกต้อง (80–220 cm)'); return;
+    }
+
+    const median = WHO[gender][age];
+    const diff = height - median;
+    const pct = Math.min(Math.max(((height - (median - 20)) / 40) * 100, 5), 95);
+
+    document.getElementById('res-height').textContent = height + ' cm';
+
+    let msg = '';
+    if (diff >= 5) {
+      msg = `<strong>สูงกว่าเกณฑ์มาตรฐาน ${diff.toFixed(1)} cm</strong> 🎉<br>ดีมาก! รักษาโภชนาการและการนอนหลับให้ดีต่อเนื่อง เพื่อให้ถึงศักยภาพสูงสุด`;
+    } else if (diff >= -5) {
+      msg = `<strong>ความสูงอยู่ในเกณฑ์มาตรฐาน WHO</strong> ✅<br>เกณฑ์สำหรับ${gender === 'male' ? 'ผู้ชาย' : 'ผู้หญิง'}อายุ ${age} ปี คือ ${median} cm การดูแลโภชนาการอย่างต่อเนื่องจะช่วยให้เติบโตเต็มศักยภาพ`;
+    } else {
+      msg = `<strong>ความสูงต่ำกว่าเกณฑ์ ${Math.abs(diff).toFixed(1)} cm</strong> 💪<br>ไม่ต้องกังวล ช่วงอายุนี้ยังมีโอกาส! โภชนาการที่ถูกต้อง การนอนหลับ และการออกกำลังกายสามารถช่วยได้มาก`;
+    }
+
+    document.getElementById('res-msg').innerHTML = msg;
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    setTimeout(() => {
+      document.getElementById('res-bar').style.width = pct + '%';
+    }, 100);
+  }
+
+  function joinWaitlist() {
+    const email = document.getElementById('email-input').value;
+    if (!email || !email.includes('@')) {
+      alert('กรุณาใส่อีเมลที่ถูกต้อง'); return;
+    }
+    document.getElementById('email-input').value = '';
+    document.getElementById('success-msg').classList.add('show');
+  }
+
+  // Scroll fade-in for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.problem-card, .product-card, .activity-card, .info-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
 </body>
 </html>
